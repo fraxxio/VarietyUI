@@ -1,7 +1,7 @@
 {
-  "name": "nextra-docs-template",
+  "name": "variety-ui",
   "version": "0.0.1",
-  "description": "Nextra docs template",
+  "description": "VarietyUI - UI components for React",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shuding/nextra-docs-template.git"
+    "url": "git+https://github.com/fraxxio/VarietyUI.git"
   },
-  "author": "Shu Ding <g@shud.in>",
+  "author": "Dev Rokas",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shuding/nextra-docs-template/issues"
+    "url": "https://github.com/fraxxio/VarietyUI/issues"
   },
-  "homepage": "https://github.com/shuding/nextra-docs-template#readme",
+  "homepage": "https://github.com/fraxxio/VarietyUI.git#readme",
   "dependencies": {
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
