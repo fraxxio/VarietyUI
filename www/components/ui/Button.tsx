@@ -3,7 +3,7 @@ import { cva, VariantProps } from "class-variance-authority";
 import defaultConfig from "../components.json";
 
 type Theme = "modern" | "glassmorphism" | "brutalism";
-type Variant = "primary" | "secondary";
+type Variant = "primary" | "secondary" | "outline" | "danger" | "ghost";
 type Size = "xs" | "sm" | "md" | "lg" | "xl";
 
 type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
@@ -12,27 +12,35 @@ type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
   size?: Size;
 };
 
-const modernVariants = cva("rounded", {
-  variants: {
-    variant: {
-      primary:
-        "bg-black text-white duration-200 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-300",
-      secondary:
-        "border border-black border-opacity-30 duration-200 text-black hover:text-gray-800 hover:border-opacity-50 dark:text-white dark:hover:text-gray-300 dark:border-white dark:border-opacity-40 dark:hover:border-opacity-50",
+const modernVariants = cva(
+  "rounded inline-flex gap-2 items-center justify-center font-medium",
+  {
+    variants: {
+      variant: {
+        primary:
+          "bg-black text-white duration-200 hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-gray-300",
+        secondary:
+          "duration-200 bg-opacity-10 bg-neutral-700 hover:bg-opacity-20 dark:bg-opacity-100 dark:hover:bg-opacity-70 text-black  dark:text-white dark:hover:text-gray-300",
+        outline:
+          "border border-black border-opacity-20 duration-200 text-black bg-black bg-opacity-0 hover:bg-opacity-[0.03] dark:bg-white dark:bg-opacity-0 dark:hover:bg-opacity-[0.03] hover:text-gray-800 hover:border-opacity-25 dark:text-white dark:hover:text-gray-300 dark:border-white dark:border-opacity-20 dark:hover:border-opacity-25",
+        danger: "bg-red-700 text-white duration-200 hover:bg-red-900",
+        ghost:
+          "bg-black bg-opacity-0 hover:bg-opacity-10 dark:bg-white dark:bg-opacity-0 dark:hover:bg-opacity-10 duration-200",
+      },
+      size: {
+        xs: "py-0.5 px-1 text-xs",
+        sm: "py-1 px-2 text-sm",
+        md: "py-1.5 px-3.5",
+        lg: "py-2 px-6 text-lg",
+        xl: "py-3 px-7 text-xl",
+      },
     },
-    size: {
-      xs: "py-0.5 px-1 text-xs",
-      sm: "py-1 px-2 text-sm",
-      md: "py-2 px-4",
-      lg: "py-2 px-6 text-lg",
-      xl: "py-3 px-7 text-xl",
+    defaultVariants: {
+      variant: "primary",
+      size: "md",
     },
   },
-  defaultVariants: {
-    variant: "primary",
-    size: "md",
-  },
-});
+);
 
 const glassmorphismVariants = cva("", {
   variants: {
@@ -41,6 +49,9 @@ const glassmorphismVariants = cva("", {
         "backdrop-blur-lg bg-white bg-opacity-50 text-black hover:bg-opacity-70",
       secondary:
         "backdrop-blur-lg bg-gray-200 bg-opacity-50 text-black hover:bg-opacity-70",
+      outline: "",
+      danger: "",
+      ghost: "",
     },
     size: {
       xs: "py-0.5 px-1 text-xs",
@@ -63,6 +74,9 @@ const brutalismVariants = cva("", {
         "border-2 border-black bg-yellow-400 text-black hover:bg-yellow-500",
       secondary:
         "border-2 border-black bg-pink-400 text-black hover:bg-pink-500",
+      outline: "",
+      danger: "",
+      ghost: "",
     },
     size: {
       xs: "py-0.5 px-1 text-xs",
@@ -85,15 +99,14 @@ const themeVariants = {
   glassmorphism: glassmorphismVariants,
   brutalism: brutalismVariants,
 };
-
-export default function Button({
+const Button = ({
   className,
   theme,
   variant,
   size,
   children,
   ...props
-}: ButtonProps) {
+}: ButtonProps) => {
   const appliedTheme: Theme = theme || defaultTheme;
   const selectedVariants = themeVariants[appliedTheme];
 
@@ -110,4 +123,6 @@ export default function Button({
       {children}
     </button>
   );
-}
+};
+
+export default Button;

@@ -4,6 +4,7 @@ This is a button component:
 
 import Button from "@/components/ui/Button";
 import CenterComponent from "@/components/CenterComponent";
+import { BookmarkPlus } from "lucide-react";
 
 <CenterComponent>
   <Button>Button</Button>
@@ -14,5 +15,32 @@ import CenterComponent from "@/components/CenterComponent";
 ### Secondary
 
 <CenterComponent>
-  <Button variant="secondary">Button</Button>
+  <Button variant="secondary">Secondary</Button>
+</CenterComponent>
+
+### Outline
+
+<CenterComponent>
+  <Button variant="outline">Outline</Button>
+</CenterComponent>
+
+### Danger
+
+<CenterComponent>
+  <Button variant="danger">Danger</Button>
+</CenterComponent>
+
+### Ghost
+
+<CenterComponent>
+  <Button variant="ghost">Ghost</Button>
+</CenterComponent>
+
+### With icon
+
+<CenterComponent>
+  <Button>
+    Bookmark
+    <BookmarkPlus size={20} />
+  </Button>
 </CenterComponent>
