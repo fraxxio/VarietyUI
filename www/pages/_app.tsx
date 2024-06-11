@@ -1,11 +1,11 @@
 import { MDXProvider } from "nextra/mdx";
 import "../components/globals.css";
 import Button from "@/components/ui/Button";
-import CenterComponent from "@/components/CenterComponent";
+import PreviewComponent from "@/components/PreviewComponent";
 
 const components = {
   button: Button,
-  centerComponent: CenterComponent,
+  centerComponent: PreviewComponent,
 };
 
 function MyApp({ Component, pageProps }) {
