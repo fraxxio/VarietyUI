@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "./ui/Button";
 import Select from "./ui/Select";
+import { ChevronsUpDown } from "lucide-react";
 
 type PreviewComponentProps = React.HTMLAttributes<HTMLDivElement> & {
   component: string;
@@ -25,10 +26,13 @@ export default function PreviewComponent({
       className="relative my-4 grid min-h-52 w-[70%] place-items-center rounded border border-neutral-400 bg-neutral-200 dark:border-neutral-700 dark:bg-neutral-900"
     >
       <Select
-        className="absolute left-5 top-5"
+        className="absolute left-3 top-3"
         onValueChange={setSelectedTheme}
+        size="sm"
       >
-        <Select.Trigger>Select theme</Select.Trigger>
+        <Select.Trigger>
+          Select theme <ChevronsUpDown size={14} />
+        </Select.Trigger>
         <Select.List>
           <Select.Item value="modern">Modern</Select.Item>
           <Select.Item value="glassmorphism">Glassmorphism</Select.Item>
