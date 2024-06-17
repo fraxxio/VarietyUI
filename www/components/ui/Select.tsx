@@ -1,6 +1,13 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+  useMemo,
+} from "react";
 import { cn } from "@/lib/utils";
-import { VariantProps, cva } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 import defaultConfig from "../components.json";
 
 type Theme = "modern" | "glassmorphism" | "brutalism";
@@ -13,17 +20,41 @@ type SelectProps = React.HTMLAttributes<HTMLDivElement> & {
   size?: Size;
   children: ReactNode;
   onValueChange?: (value: string) => void;
+  defaultItem?: {
+    label: string;
+    value: string;
+  };
 };
 
 type SelectContextType = {
-  selectedValue: string;
+  selectedValue: {
+    title: string;
+    value: string;
+  };
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  handleSelectedValue: (value: string) => void;
+  handleSelectedValue: (value: string, title: string) => void;
   variant: Variant;
   size: Size;
   theme?: Theme;
 };
+
+const Icon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="m7 15 5 5 5-5" />
+    <path d="m7 9 5-5 5 5" />
+  </svg>
+);
 
 const modernVariants = cva("cursor-pointer rounded ", {
   variants: {
@@ -33,11 +64,11 @@ const modernVariants = cva("cursor-pointer rounded ", {
       ghost: "",
     },
     size: {
-      xs: "text-xs px-1.5 py-1",
-      sm: "text-sm px-1.5 py-1",
-      md: "px-2 py-1",
-      lg: "px-2.5 py-1.5 text-lg",
-      xl: "px-3 py-2 text-xl",
+      xs: "text-xs [&_.trigger]:px-1.5 [&_.trigger]:py-1",
+      sm: "text-sm [&_.trigger]:px-1.5 [&_.trigger]:py-1",
+      md: "[&_.trigger]:px-2 [&_.trigger]:py-1",
+      lg: "[&_.trigger]:px-2.5 [&_.trigger]:py-1.5 text-lg",
+      xl: "[&_.trigger]:px-3 [&_.trigger]:py-2 text-xl",
     },
   },
   defaultVariants: {
@@ -242,10 +273,15 @@ const Select = ({
   variant = "primary",
   theme,
   className,
+  defaultItem,
   onValueChange,
   ...props
 }: SelectProps) => {
-  const [selectedValue, setSelectedValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState(
+    defaultItem?.value
+      ? { title: defaultItem.label, value: defaultItem.value }
+      : { title: "", value: "" },
+  );
   const [isOpen, setIsOpen] = useState(false);
 
   const appliedTheme: Theme = theme || defaultTheme;
@@ -256,23 +292,26 @@ const Select = ({
     return null;
   }
 
-  const handleSelectedValue = (value: string) => {
-    setSelectedValue(value);
+  const handleSelectedValue = (value: string, title: string) => {
+    setSelectedValue({ value, title });
     if (onValueChange) onValueChange(value);
   };
 
+  const contextValues = useMemo(
+    () => ({
+      selectedValue,
+      isOpen,
+      setIsOpen,
+      handleSelectedValue,
+      variant,
+      size,
+      theme,
+    }),
+    [selectedValue, isOpen, handleSelectedValue, variant, size, theme],
+  );
+
   return (
-    <SelectContext.Provider
-      value={{
-        selectedValue,
-        isOpen,
-        setIsOpen,
-        handleSelectedValue,
-        variant,
-        size,
-        theme,
-      }}
-    >
+    <SelectContext.Provider value={contextValues}>
       <div
         {...props}
         className={cn(selectedVariants({ variant, size }), className)}
@@ -292,11 +331,22 @@ const SelectTrigger = ({
 
   return (
     <div
-      className="flex items-center justify-between gap-2"
+      className={cn(
+        "trigger flex items-center justify-between gap-2",
+        className,
+      )}
       onClick={() => setIsOpen(!isOpen)}
       {...props}
     >
-      {"Selected " + selectedValue || children}
+      {selectedValue.value ? (
+        <>
+          Selected: <small>{selectedValue.title}</small> {Icon}
+        </>
+      ) : (
+        <>
+          {children} {Icon}
+        </>
+      )}
     </div>
   );
 };
@@ -333,12 +383,18 @@ const SelectItem = ({
 
   const appliedTheme: Theme = theme || defaultTheme;
   const selectedVariants = itemThemeVariants[appliedTheme];
+
+  const handleClick = () => {
+    if (typeof children !== "string") {
+      throw new Error("Select.Item children must be a single string.");
+    }
+    handleSelectedValue(value, children);
+    setIsOpen(false);
+  };
+
   return (
     <div
-      onClick={() => {
-        handleSelectedValue(value);
-        setIsOpen(false);
-      }}
+      onClick={handleClick}
       className={cn(selectedVariants({ variant, size }))}
     >
       {children}

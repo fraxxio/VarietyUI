@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Button from "./ui/Button";
 import Select from "./ui/Select";
-import { ChevronsUpDown } from "lucide-react";
 
 type PreviewComponentProps = React.HTMLAttributes<HTMLDivElement> & {
   component: string;
@@ -18,7 +17,7 @@ export default function PreviewComponent({
   variant = "primary",
   ...props
 }: PreviewComponentProps) {
-  const [selectedTheme, setSelectedTheme] = useState("modern");
+  const [selectedTheme, setSelectedTheme] = useState("");
   const Preview = componentMap[component];
   return (
     <div
@@ -29,10 +28,9 @@ export default function PreviewComponent({
         className="absolute left-3 top-3"
         onValueChange={setSelectedTheme}
         size="sm"
+        defaultItem={{ label: "Modern", value: "modern" }}
       >
-        <Select.Trigger>
-          Select theme <ChevronsUpDown size={14} />
-        </Select.Trigger>
+        <Select.Trigger>Select theme</Select.Trigger>
         <Select.List>
           <Select.Item value="modern">Modern</Select.Item>
           <Select.Item value="glassmorphism">Glassmorphism</Select.Item>
