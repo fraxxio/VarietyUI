@@ -5,6 +5,8 @@ import React, {
   ReactNode,
   useEffect,
   useMemo,
+  useCallback,
+  useRef,
 } from "react";
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
@@ -81,7 +83,7 @@ const modernSelectVariants = cva("rounded", {
   variants: {
     variant: {
       primary:
-        "absolute top-8 left-0 border border-neutral-400  dark:border-neutral-700 dark:bg-neutral-900",
+        "absolute top-8 left-0 border border-neutral-400  dark:border-neutral-700 dark:bg-neutral-900 max-h-60 overflow-auto",
       ghost: "",
     },
     size: {
@@ -237,6 +239,7 @@ const brutalismItemVariants = cva("rounded duration-200", {
     size: "md",
   },
 });
+
 const SelectContext = createContext<SelectContextType | undefined>(undefined);
 
 const useSelectContext = () => {
@@ -283,6 +286,7 @@ const Select = ({
       : { title: "", value: "" },
   );
   const [isOpen, setIsOpen] = useState(false);
+  const selectRef = useRef<HTMLDivElement>(null);
 
   const appliedTheme: Theme = theme || defaultTheme;
   const selectedVariants = parentThemeVariants[appliedTheme];
@@ -310,9 +314,26 @@ const Select = ({
     [selectedValue, isOpen, handleSelectedValue, variant, size, theme],
   );
 
+  const handleClickOutside = useCallback((event: MouseEvent) => {
+    if (
+      selectRef.current &&
+      !selectRef.current.contains(event.target as Node)
+    ) {
+      setIsOpen(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [handleClickOutside]);
+
   return (
     <SelectContext.Provider value={contextValues}>
       <div
+        ref={selectRef}
         {...props}
         className={cn(selectedVariants({ variant, size }), className)}
       >
@@ -340,7 +361,9 @@ const SelectTrigger = ({
     >
       {selectedValue.value ? (
         <>
-          Selected: <small>{selectedValue.title}</small> {Icon}
+          Selected:{" "}
+          <small className="max-w-16 truncate">{selectedValue.title}</small>{" "}
+          {Icon}
         </>
       ) : (
         <>

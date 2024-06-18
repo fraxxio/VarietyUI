@@ -2,18 +2,17 @@ import { MDXProvider } from "nextra/mdx";
 import "../components/globals.css";
 import Button from "@/components/ui/Button";
 import PreviewComponent from "@/components/PreviewComponent";
+import { AppProps } from "next/app";
 
 const components = {
-  button: Button,
-  centerComponent: PreviewComponent,
+  Button,
+  PreviewComponent,
 };
 
-function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <MDXProvider components={components}>
       <Component {...pageProps} />
     </MDXProvider>
   );
 }
-
-export default MyApp;
