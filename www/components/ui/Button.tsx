@@ -67,11 +67,11 @@ const glassmorphismVariants = cva("", {
   },
 });
 
-const brutalismVariants = cva("", {
+const brutalismVariants = cva("font-medium", {
   variants: {
     variant: {
       primary:
-        "border-2 border-black bg-yellow-400 text-black hover:bg-yellow-500",
+        "border-l-2 border-t-2 border-b-4 border-r-4 border-black dark:border-neutral-500 bg-white text-black duration-200 hover:border-b-[5px] hover:border-r-[5px]",
       secondary:
         "border-2 border-black bg-pink-400 text-black hover:bg-pink-500",
       outline: "",
