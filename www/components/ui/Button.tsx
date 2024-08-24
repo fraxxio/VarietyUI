@@ -42,16 +42,19 @@ const modernVariants = cva(
   },
 );
 
-const glassmorphismVariants = cva("", {
+const glassmorphismVariants = cva("font-medium rounded-lg text-neutral-800 ", {
   variants: {
     variant: {
       primary:
-        "backdrop-blur-lg bg-white bg-opacity-50 text-black hover:bg-opacity-70",
+        "relative backdrop-blur-lg border-2 border-white shadow-sm bg-gradient-to-t from-[rgba(209,213,219,0.8)] to-[rgba(147,197,253,0.8)] transition duration-300 hover:before:opacity-70 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-t before:from-blue-300 before:to-blue-200 before:opacity-0 before:transition-opacity before:duration-300 before:rounded-lg before:z-0 overflow-hidden",
       secondary:
-        "backdrop-blur-lg bg-gray-200 bg-opacity-50 text-black hover:bg-opacity-70",
-      outline: "",
-      danger: "",
-      ghost: "",
+        "relative backdrop-blur-lg border-2 border-white shadow-sm bg-blue-200 transition duration-300 hover:before:opacity-70 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-t before:from-blue-300 before:to-blue-200 before:opacity-0 before:transition-opacity before:duration-300 before:rounded-lg before:z-0 overflow-hidden",
+      outline:
+        "relative backdrop-blur-lg border-2 border-white shadow-sm transition duration-300 hover:before:opacity-70 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-t before:from-blue-300 before:to-blue-200 before:opacity-0 before:transition-opacity before:duration-300 before:rounded-lg before:z-0 overflow-hidden dark:text-white",
+      danger:
+        "relative text-white backdrop-blur-lg border-2 border-white shadow-sm bg-gradient-to-t from-red-400 to-red-300 transition duration-300 hover:before:opacity-70 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-t before:from-red-300 before:to-red-400 before:opacity-0 before:transition-opacity before:duration-300 before:rounded-lg before:z-0 overflow-hidden",
+      ghost:
+        "hover:backdrop-blur-lg hover:bg-slate-300 bg-opacity-40 duration-300 dark:text-white hover:dark:text-black",
     },
     size: {
       xs: "py-0.5 px-1 text-xs",
@@ -120,7 +123,9 @@ const Button = ({
       {...props}
       className={cn(selectedVariants({ variant, size }), className)}
     >
-      {children}
+      <span className="relative z-10 inline-flex items-center justify-center gap-2 ">
+        {children}
+      </span>
     </button>
   );
 };

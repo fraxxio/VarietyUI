@@ -7,44 +7,59 @@ import Select from "@/components/ui/Select";
 import PreviewComponent from "@/components/PreviewComponent";
 import { BookmarkPlus } from "lucide-react";
 
-<PreviewComponent component="Button">Primary</PreviewComponent>
+<PreviewComponent
+  component="Button"
+  backgroundColor="bg-slate-300 dark:bg-neutral-900"
+>
+  Primary
+</PreviewComponent>
 
 ## Examples
 
 ### Secondary
 
-<PreviewComponent component="Button" variant="secondary">
+<PreviewComponent
+  component="Button"
+  variant="secondary"
+  backgroundColor="bg-slate-300 dark:bg-neutral-900"
+>
   Secondary
 </PreviewComponent>
 
 ### Outline
 
-<PreviewComponent component="Button" variant="outline">
+<PreviewComponent
+  component="Button"
+  variant="outline"
+  backgroundColor="bg-slate-300 dark:bg-neutral-900"
+>
   Outline
 </PreviewComponent>
 ### Danger
 
-<PreviewComponent component="Button" variant="danger">
+<PreviewComponent
+  component="Button"
+  variant="danger"
+  backgroundColor="bg-slate-300 dark:bg-neutral-900"
+>
   Danger
 </PreviewComponent>
 ### Ghost
 
-<PreviewComponent component="Button" variant="ghost">
+<PreviewComponent
+  component="Button"
+  variant="ghost"
+  backgroundColor="bg-slate-300 dark:bg-neutral-900"
+>
   Ghost
 </PreviewComponent>
 
 ### With icon
 
-<PreviewComponent component="Button">
+<PreviewComponent
+  component="Button"
+  backgroundColor="bg-slate-300 dark:bg-neutral-900"
+>
   Bookmark
   <BookmarkPlus size={20} />
 </PreviewComponent>
-
-<Select theme="modern" variant="primary" size="md">
-  <Select.Trigger>Select an option</Select.Trigger>
-  <Select.List>
-    <Select.Item value="Option 1">Option 1</Select.Item>
-    <Select.Item value="Option 2">Option 2</Select.Item>
-    <Select.Item value="Option 3">Option 3</Select.Item>
-  </Select.List>
-</Select>
