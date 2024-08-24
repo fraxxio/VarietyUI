@@ -62,7 +62,7 @@ const modernVariants = cva("cursor-pointer rounded ", {
   variants: {
     variant: {
       primary:
-        "border border-neutral-400 hover:border-neutral-600 hover:text-neutral-950 hover:dark:text-white dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800",
+        "border border-neutral-400 hover:border-neutral-600 hover:text-neutral-950 hover:dark:text-white dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800 bg-white",
       ghost: "",
     },
     size: {
@@ -83,7 +83,7 @@ const modernSelectVariants = cva("rounded", {
   variants: {
     variant: {
       primary:
-        "absolute top-8 left-0 border border-neutral-400  dark:border-neutral-700 dark:bg-neutral-900 max-h-60 overflow-auto",
+        "bg-white absolute top-8 left-0 border border-neutral-400  dark:border-neutral-700 dark:bg-neutral-900 max-h-60 overflow-auto",
       ghost: "",
     },
     size: {
@@ -103,7 +103,8 @@ const modernSelectVariants = cva("rounded", {
 const modernItemVariants = cva("rounded duration-200", {
   variants: {
     variant: {
-      primary: "hover:bg-neutral-300 dark:hover:bg-neutral-700",
+      primary:
+        "bg-white dark:bg-neutral-900 hover:bg-neutral-300 dark:hover:bg-neutral-700",
       ghost: "",
     },
     size: {
